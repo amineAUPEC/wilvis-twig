@@ -1,0 +1,33 @@
+/*fiche style page principale Bootstrap*/
+td,
+th {
+    border: 1px solid rgb(94, 6, 6);
+    padding: 10px;
+}
+
+td {
+    text-align: center;
+}
+
+
+/* body{
+    background-color: aquamarine;
+    color:red;
+} */
+body{
+    /* background-color: #030330; */
+    /* background-color: rgba(253, 119, 109, 0.26); */
+}
+@div{
+    background-color: rgba(253, 119, 109, 0.26);
+    color:rgb(114, 12, 12);    
+}
+
+@table {
+    border-collapse: collapse;
+    border: 2px solid rgb(78, 10, 10);
+    letter-spacing: 1px;
+    font-family: sans-serif;
+    font-size: .8rem;
+}
+

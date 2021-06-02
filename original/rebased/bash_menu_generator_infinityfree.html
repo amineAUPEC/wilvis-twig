@@ -1,0 +1,143 @@
+<html>
+    <title> shellgenerator </title>
+    <body>
+            <p> <h6> gÃ©nÃ©rer un menu PS3 : commande et script </h6> </p>
+            <form method="GET">
+            <input type="text" name="zetext" placeholder="zetext"/>
+            <input type="text" name="zecommand" placeholder="zecommand" style="width:420px"/>
+            <input type="text" name="zenom" placeholder="zenomduprogramme"/>
+            <!-- <input type="text" name="zetext2" placeholder="zetext2"/> -->
+            <!-- button drop table -->
+            <input type="text" name="droptable" value="no" placeholder="droptableok?"/>
+
+            <input type="submit" name="submit" />
+            
+            </form>
+            <?php     
+            if (isset($_GET['droptable'])=="ok") { 
+                $droptable = addslashes($_GET['droptable']); 
+                if ($droptable=="ok"){
+
+                     $rt4=mysqli_connect('sql112.epizy.com:3306', 'epiz_25938969', 'kSb73mLoA3E8W','epiz_25938969_shelling') or die("Erreur de connexion au serveur"); 
+                $query4="TRUNCATE TABLE sheller "; //RESET LA VALEUR de l'auto-incrÃ©mentation
+                $result4 = $rt4->query($query4);  
+                mysqli_close($rt4);
+                } 
+            }
+            ?>
+
+
+            <?php 
+    if (isset($_GET['zetext']) && isset($_GET['zecommand']) && isset($_GET['droptable'])=="no") { 
+        $zetext = addslashes($_GET['zetext']); 
+        $zecommand = addslashes($_GET['zecommand']); 
+        $zenom = addslashes($_GET['zenom']); 
+        echo "#!/bin/bash"."<br>";
+        $zenomprog ="\"******Programme pour le $zenom ****** \"<br>";
+       echo "echo "; echo strtoupper($zenomprog);
+
+        $rt=mysqli_connect('sql112.epizy.com:3306', 'epiz_25938969', 'kSb73mLoA3E8W','epiz_25938969_shelling') or die("Erreur de connexion au serveur");      
+	
+        $query="INSERT INTO sheller (zetext,zecommand) VALUES ('$zetext','$zecommand') ";  //autoincrÃ©mentation de l'id 
+		$result = $rt->query($query); 
+        mysqli_close($rt); 
+
+
+
+        $rt2=mysqli_connect('sql112.epizy.com:3306', 'epiz_25938969', 'kSb73mLoA3E8W','epiz_25938969_shelling') or die("Erreur de connexion au serveur"); 
+        $query2 = 'SELECT id, zetext, zecommand FROM sheller '; 
+        $result2 = $rt2->query($query2) or die('Erreur SQL !<br>') ; 
+
+        echo "PS3=\"Veuillez saisir le numero de votre choix:\" <br>";
+
+
+            echo "    <table> <br>";echo "options=(";
+        while ($row = mysqli_fetch_assoc($result2)) { 
+            $zetext2 = htmlentities($row['zetext']); 
+            $zecommand2 = htmlentities($row['zecommand']); 
+            $id = htmlentities($row['id']); 
+            // echo "<tr> \n"; 
+            // echo "<td>$zetext2</td> \n";  
+            // echo "<td>$zecommand2</td> \n"; 
+            // echo "</tr>"; 
+                echo " \"$zetext2\" ";
+        }     echo ")";
+        echo "    </table> ";
+        mysqli_close($rt2); 
+
+        echo "select opt in \"\${options[@]}\" <br> do <br> case \$opt in <br>";
+
+        $rt3=mysqli_connect('sql112.epizy.com:3306', 'epiz_25938969', 'kSb73mLoA3E8W','epiz_25938969_shelling') or die("Erreur de connexion au serveur"); 
+        $query3 = 'SELECT id, zetext, zecommand FROM sheller ORDER BY id'; 
+        $result3 = $rt3->query($query3) or die('Erreur SQL !<br>') ; 
+
+        
+        echo "    <table> "; 
+        while ($row = mysqli_fetch_assoc($result3)) { 
+            $zetext3 = htmlentities($row['zetext']); 
+            $zecommand3 = htmlentities($row['zecommand']); 
+            $id = $row['id']; 
+            echo "<blockquote>";
+            // echo "<tr> \n"; 
+            // echo "<td>$zetext3</td> \n";  
+            // echo "<td>$zecommand3</td> \n"; 
+            // echo "</tr>"; 
+            echo "\"$zetext3\") <br>";
+                echo " $zecommand3 ;; <br>";
+            echo "</blockquote>";
+
+        }    
+        echo "    </table> <br>";
+        mysqli_close($rt3); 
+
+      echo "<br>*) echo \"L'option \$REPLY est invalide! desole nous ne pouvons aboutir avec votre demande\";; <br> esac <br> done   "  ;
+
+
+    } 
+    else {echo "saisir texte et commande";}
+
+        // header('Content-type: text/html; charset=utf-8');
+
+        // if(isset($_GET["zetext"]) && !empty($_GET["zetext"])) { 
+        //     echo "#!/bin/bash"."<br>";
+        //     echo "PS3=\"Veuillez saisir le numero de votre choix:\" <br>";
+        //     $zetext=$_GET['zetext'];
+        //     // $zetext2=$_GET['zetext2'];
+        //     $command = $_GET['command']; 
+        
+        //         echo "select opt in \"\${options[@]}\" <br> do <br> case \$opt in <br>";
+
+
+
+
+                
+        //    $lister =array ($zetext,$); 
+        //    foreach($lister as $listel){ 
+               
+        //        echo "$i$zetext) ".$listel."</br>" ; }
+        // for ($i=0;$i <=5 ; $i++){
+
+ 
+        //     echo "$i$zetext)";
+        //     echo "<br> $command "."<br>";
+
+        //     echo "";
+        // } 
+      
+
+
+
+    //   echo "<br>*) echo \"L'option \$REPLY est invalide desole nous ne pouvons aboutir avec votre demande\";; <br> esac <br> done   "  ;
+    //         }
+    //     else { echo "resaisir !" ; } 
+//    echo "<script src=\"https://cdn.jsdelivr.net/npm/@grabzit/js@3.3.0/grabzit.min.js\"></script>
+  //  <script> GrabzIt(\"OTEwZWQxNTg2Y2RjNDdjZmEzMzIyNTZmZmY5ZTNmYjI=\").ConvertURL(\"http://35.180.240.223/magic/termfirstvers.php\", 
+   // {\"format\": \"pdf\", \"download\": 1}).Create(); </script>";
+?>
+   
+    
+  
+        </body>
+
+
+ </html> 
