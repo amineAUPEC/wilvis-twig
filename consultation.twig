@@ -1,0 +1,42 @@
+
+
+ {% set rt = mysqli_connect('database', 'root', 'tiger', 'mytestdb') %} 
+ {% set query = 'SELECT id, devices, chain, inpint, outint, source, dest, sport, dport,aaction, atable, proto, gere FROM bibliographie' %} 
+ {% set result = rt.query(query) or 'Erreur SQL !<br>'~query~'<br>'~mysqli_error() %} 
+ {% for i in 0..999999 if (row = mysqli_fetch_assoc(result)) %} 
+ {% set chain = htmlentities(row['chain']) %} 
+ {% set action = htmlentities(row['aaction']) %} {# $row est notre variable contenant la liste #}
+ {% set id = row['id'] %} 
+ {% set devices = htmlentities(row['devices']) %} {# $row est notre variable contenant la liste #}
+ {% set inpint = htmlentities(row['inpint']) %} {# $row est notre variable contenant la liste #}
+
+ {% set outint = htmlentities(row['outint']) %} 
+ {% set source = htmlentities(row['source']) %} 
+ {% set dest = htmlentities(row['dest']) %} 
+ {% set sport = htmlentities(row['sport']) %} 
+ {% set dport = htmlentities(row['dport']) %} 
+ {% set proto = htmlentities(row['proto']) %} 
+ {% set action = htmlentities(row['aaction']) %} 
+ {% set atable = htmlentities(row['atable']) %} 
+ {% set gere = htmlentities(row['gere']) %} 
+
+ {{ "<tr> \n" }} {# table row #}
+ {{ gere }} {# table div #}
+ {{ devices }} 
+ {{ chain }} {# table div #}
+ {{ inpint }} 
+ {{ outint }} 
+ {{ source }} 
+ {{ dest }} 
+ {{ sport }} 
+ {{ dport }} 
+ {{ proto }} 
+ {{ action }} 
+ {{ atable }} 
+ {{ gereiddeviceschaininpintoutintsourcedestsportdportactionatableproto }} 
+ {# renvoie juste l'id associé vers la page supprimer.php à chaque ligne de la BDD #}
+ {{ id }}
+ {{ "</tr>" }} 
+ {% endfor %} 
+ mysqli_close(rt) 
+ 

@@ -203,22 +203,15 @@
                             <th>&nbsp;</th> <!--espace insécable espace ordinaire--> 
                         </tr> 
                             <?php 
-                            // Connexion à mysql en local (localhost est équivalent à 127.0.0.1) // Sélectionner la base MyTestDB en php7.2
                             $rt = mysqli_connect('database', 'root', 'tiger', 'mytestdb'); 
-                            // On récupère maintenant tous les enregistrements de la table bibliographie 
-                            // variable $query pour contenir la requete SQL de selection de ts les champs de la table bibliographie 
                             $query = 'SELECT id, devices, chain, inpint, outint, source, dest, sport, dport,aaction, atable, proto, gere FROM bibliographie'; 
-                            // Lance la requête SQL 
                             $result = $rt->query($query) or die('Erreur SQL !<br>'.$query.'<br>').mysqli_error() ; 
-                            // On parcourt la liste des enregistrements 
                             while ($row = mysqli_fetch_assoc($result)) { 
-                            // htmlentities convertie les caractères accentués pour qu’ils s’affichent correctement en HTML 
                                 $chain = htmlentities($row['chain']); 
                                 $action = htmlentities($row['aaction']); //$row est notre variable contenant la liste
                                 $id = $row['id']; 
                                 $devices = htmlentities($row['devices']); //$row est notre variable contenant la liste
                                 $inpint = htmlentities($row['inpint']); //$row est notre variable contenant la liste
-
 
                                 $outint = htmlentities($row['outint']); 
                                 $source = htmlentities($row['source']); 
@@ -229,8 +222,6 @@
                                 $action = htmlentities($row['aaction']); 
                                 $atable = htmlentities($row['atable']); 
                                 $gere = htmlentities($row['gere']); 
-                                // $enabling = htmlentities($row['enabling']); 
-
 
                                 echo "<tr> \n"; //table row
                                 echo "<td>$gere</td> \n";  //table div 
@@ -245,24 +236,11 @@
                                 echo "<td>$proto</td> \n"; 
                                 echo "<td>$action</td> \n"; 
                                 echo "<td>$atable</td> \n"; 
-                                // echo "<td>$enabling</td> \n"; 
-
-                                // echo "<td></td> \n"; 
-                                // echo " <td> </td>"; 
-                                // echo "<td> </td>"; 
-                                //renvoie des paramètres associés vers la page modifier.php à chaque ligne de la BDD
                                 echo "<td><a href=\"modifier.php?gere=$gere&id=$id&devices=$devices&chain=$chain&inpint=$inpint&outint=$outint&outint=$source&source=$dest&dest=$sport&sport=$dport&dport=$action&action=$atable&atable=$proto&proto\">Modifier</a>"; 
                                 //renvoie juste l'id associé vers la page supprimer.php à chaque ligne de la BDD
                                 echo " <a href=\"supprimer.php?id=$id\">Supprimer</a></td>";
                                 echo "</tr>"; 
                             } 
-                            // $query2 = 'SELECT SUM(prix)as prixtot FROM bibliographie'; 
-                            // $result2 = $rt->query($query2) or die('Erreur SQL !<br>'.$query2.'<br>'.mysqli_error()) ; 
-                            // while ($row2 = mysqli_fetch_assoc($result2)) { 
-                            //     $prixtot = htmlentities($row2['prixtot']); 
-                            // }
-
-                            // Fermeture de la connexion à la BD  via mysqli_connect pour PHP7 avec la variable
                             mysqli_close($rt); 
                             ?> 
                     </table> 
